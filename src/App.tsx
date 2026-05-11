@@ -110,20 +110,20 @@ function Services() {
           <h2 className="mt-3 text-4xl md:text-5xl font-bold">Import & export, end to end.</h2>
           <p className="mt-4 text-muted-foreground text-lg">From sourcing to delivery, Dazex handles every link in your supply chain so you can focus on growing your business.</p>
         </div>
-        <div className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-3 items-stretch">
           {services.map((s) => (
-            <div key={s.title} className="group flex flex-col rounded-2xl border border-border bg-card p-8 hover:shadow-elegant hover:-translate-y-1 transition-all duration-300">
+            <div key={s.title} className="group flex flex-col h-full rounded-2xl border border-border bg-card p-8 hover:shadow-elegant hover:-translate-y-1 transition-all duration-300">
               <div className="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-brand text-primary-foreground shadow-elegant group-hover:shadow-glow transition-shadow">
                 <s.icon className="h-6 w-6" />
               </div>
               <h3 className="mt-6 text-xl font-bold">{s.title}</h3>
-              <p className="mt-2 text-muted-foreground">{s.desc}</p>
+              <p className="mt-2 text-muted-foreground flex-grow">{s.desc}</p>
               <a
                 href={waLink(s.title)}
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={`Enquire about ${s.title} on WhatsApp`}
-                className="mt-6 inline-flex items-center gap-2 self-start rounded-full bg-[#25D366] px-4 py-2 text-sm font-semibold text-white hover:opacity-90 transition-opacity shadow-sm"
+                className="mt-8 inline-flex items-center gap-2 self-start rounded-full bg-[#25D366] px-4 py-2 text-sm font-semibold text-white hover:opacity-90 transition-opacity shadow-sm mt-auto"
               >
                 <MessageCircle className="h-4 w-4" /> Enquire on WhatsApp
               </a>
