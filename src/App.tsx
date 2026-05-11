@@ -1,4 +1,17 @@
-import { Phone, Mail, MapPin, Globe, Ship, Plane, Truck, Package, ShieldCheck, Globe2, ArrowRight, MessageCircle } from "lucide-react";
+import { useState } from "react";
+import { Phone, Mail, MapPin, Globe, Ship, Plane, Truck, Package, ShieldCheck, Globe2, ArrowRight, MessageCircle, Send } from "lucide-react";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+
 import logo from "./assets/dazex-logo.png";
 import hero from "./assets/hero-port.jpg";
 
@@ -53,11 +66,116 @@ function Nav() {
           <a href="#about" className="hover:text-brand-blue transition-colors">About</a>
           <a href="#contact" className="hover:text-brand-blue transition-colors">Contact</a>
         </nav>
-        <a href="#contact" className="inline-flex items-center gap-2 rounded-full bg-gradient-brand px-5 py-2.5 text-sm font-semibold text-primary-foreground shadow-elegant hover:shadow-glow transition-all">
-          Get a Quote <ArrowRight className="h-4 w-4" />
-        </a>
+        <QuoteModal />
       </div>
     </header>
+  );
+}
+
+function QuoteModal() {
+  const [formData, setFormData] = useState({
+    name: "",
+    company: "",
+    phone: "",
+    service: "",
+    requirement: "",
+  });
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const message = `Hi Srikar, I'd like to request a quote for my shipment:
+    
+👤 *Name:* ${formData.name}
+🏢 *Company:* ${formData.company}
+📞 *Phone:* ${formData.phone}
+🚢 *Service:* ${formData.service || "General Inquiry"}
+📝 *Requirement:* ${formData.requirement}`;
+
+    window.open(`https://api.whatsapp.com/send?phone=${WHATSAPP_NUMBER}&text=${encodeURIComponent(message)}`, "_blank");
+  };
+
+  return (
+    <Dialog>
+      <DialogTrigger asChild>
+        <button className="inline-flex items-center gap-2 rounded-full bg-gradient-brand px-5 py-2.5 text-sm font-semibold text-primary-foreground shadow-elegant hover:shadow-glow transition-all cursor-pointer">
+          Get a Quote <ArrowRight className="h-4 w-4" />
+        </button>
+      </DialogTrigger>
+      <DialogContent className="sm:max-w-[425px]">
+        <DialogHeader>
+          <DialogTitle className="text-2xl font-bold text-brand-navy-deep">Request a Quote</DialogTitle>
+          <DialogDescription>
+            Fill out your cargo requirements and we'll get back to you immediately on WhatsApp.
+          </DialogDescription>
+        </DialogHeader>
+        <form onSubmit={handleSubmit} className="space-y-4 py-4">
+          <div className="space-y-2">
+            <Label htmlFor="name">Full Name</Label>
+            <Input
+              id="name"
+              placeholder="Enter your name"
+              required
+              value={formData.name}
+              onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+            />
+          </div>
+          <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label htmlFor="company">Company</Label>
+              <Input
+                id="company"
+                placeholder="Company Name"
+                value={formData.company}
+                onChange={(e) => setFormData({ ...formData, company: e.target.value })}
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="phone">Phone Number</Label>
+              <Input
+                id="phone"
+                placeholder="+91..."
+                required
+                value={formData.phone}
+                onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+              />
+            </div>
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="service">Service Type</Label>
+            <select
+              id="service"
+              className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+              value={formData.service}
+              onChange={(e) => setFormData({ ...formData, service: e.target.value })}
+            >
+              <option value="">Select a service</option>
+              <option value="Sea Freight">Sea Freight</option>
+              <option value="Air Freight">Air Freight</option>
+              <option value="Road Logistics">Road Logistics</option>
+              <option value="Customs Clearance">Customs Clearance</option>
+              <option value="Global Sourcing">Global Sourcing</option>
+            </select>
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="requirement">Your Requirements</Label>
+            <Textarea
+              id="requirement"
+              placeholder="Briefly describe your shipment (Origin, Destination, Weight, etc.)"
+              required
+              className="min-h-[100px]"
+              value={formData.requirement}
+              onChange={(e) => setFormData({ ...formData, requirement: e.target.value })}
+            />
+          </div>
+          <button
+            type="submit"
+            className="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-brand px-6 py-3 text-sm font-semibold text-white shadow-elegant hover:shadow-glow transition-all"
+          >
+            Send Requirement <Send className="h-4 w-4" />
+          </button>
+        </form>
+      </DialogContent>
+    </Dialog>
   );
 }
 
