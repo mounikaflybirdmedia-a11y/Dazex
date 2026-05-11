@@ -1,5 +1,6 @@
-import { createFileRoute } from "@tanstack/react-router";
 import { Phone, Mail, MapPin, Globe, Ship, Plane, Truck, Package, ShieldCheck, Globe2, ArrowRight, MessageCircle } from "lucide-react";
+import logo from "./assets/dazex-logo.png";
+import hero from "./assets/hero-port.jpg";
 
 const WHATSAPP_NUMBER = "917075707683"; // Srikar Kashetty
 const waLink = (service?: string) =>
@@ -8,20 +9,8 @@ const waLink = (service?: string) =>
       ? `Hi Srikar, I'd like to enquire about Dazex's ${service} service.`
       : `Hi Srikar, I'd like to know more about Dazex.`
   )}`;
-import logo from "@/assets/dazex-logo.png";
-import hero from "@/assets/hero-port.jpg";
 
-export const Route = createFileRoute("/")({
-  component: Index,
-  head: () => ({
-    meta: [
-      { title: "Dazex — Trade Beyond Boundaries | Import & Export" },
-      { name: "description", content: "Dazex is a trusted import & export partner based in Hanamkonda, delivering reliable global trade and logistics solutions." },
-    ],
-  }),
-});
-
-function Index() {
+function App() {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <Nav />
@@ -229,7 +218,7 @@ function Contact() {
   );
 }
 
-function ContactRow({ icon: Icon, label, lines }: { icon: typeof Phone; label: string; lines: string[] }) {
+function ContactRow({ icon: Icon, label, lines }: { icon: any; label: string; lines: string[] }) {
   return (
     <div className="flex gap-4 items-start">
       <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-white/10 backdrop-blur border border-white/20">
@@ -257,3 +246,5 @@ function Footer() {
     </footer>
   );
 }
+
+export default App;
